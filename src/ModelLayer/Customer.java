@@ -4,7 +4,7 @@
 package ModelLayer;
 
 /**
- * @author nicklas
+ * @author Ronnie
  *
  */
 public class Customer {
