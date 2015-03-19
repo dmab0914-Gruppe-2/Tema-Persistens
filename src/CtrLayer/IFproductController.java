@@ -9,7 +9,7 @@ import ModelLayer.Product;
  * @author Jacob
  *
  */
-public interface IFproductController {
+public interface IFProductController {
 
 	public boolean addProduct(String supplierName, String name, double PurchasePrice, double salesPrice);
 	
