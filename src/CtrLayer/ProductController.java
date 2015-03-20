@@ -3,6 +3,7 @@
  */
 package CtrLayer;
 
+import DBLayer.DBProduct;
 import DBLayer.IFDBProduct;
 import ModelLayer.Product;
 
@@ -13,6 +14,10 @@ import ModelLayer.Product;
 public class ProductController implements IFProductController {
 
 	IFDBProduct dbProduct;
+	
+	public ProductController() {
+		 dbProduct = new DBProduct();
+	}
 	
 	/*
 	 * (non-Javadoc)
