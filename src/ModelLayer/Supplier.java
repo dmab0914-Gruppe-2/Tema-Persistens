@@ -9,9 +9,25 @@ public class Supplier {
 	private String email;
 	private int id;
 	
-	public Supplier(String n, String a, String c, String p, String e)
+	public Supplier(String n, String a, String c, String p, String e, int i)
 	{
-		
+		this.name = n;
+		this.address = a;
+		this.country = c;
+		this.phoneno = p;
+		this.email = e;
+		this.id = i;
+	}
+	
+	public Supplier(String n, int i)
+	{
+		this.name = n;
+		this.id = i;
+	}
+	
+	public Supplier(int i)
+	{
+		this.id = i;
 	}
 	
 	public Supplier()
