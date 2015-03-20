@@ -27,13 +27,14 @@ public class DBSupplier {
 	
 	public Supplier searchSupplier(String sname, boolean ra)
 	{
-		//
-		return null;
+		String wClause = "name like %" + sname + "%'";
+		System.out.println("Search Supplier: "+ wClause);
+		return singleWhere(wClause, ra);
 	}
 	
-	public int insert (Supplier s)
+	public int insert (Supplier s) throws Exception
 	{
-		//TODO add supplier to DB
+		
 		return 0;
 	}
 	
