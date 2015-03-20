@@ -11,12 +11,12 @@ public class Customer {
 	private int CustomerID; // The CustomerID primary key from DB
 	private String name; // The persons name
 	private String address; // The persons address
-	private String zipCode;
+	private int zipCode;
 	private String city;
 	private String phoneNumber; // THe persons phone number
 	private String email;
 
-	public Customer(int cusID, String name, String address, String zipCode,
+	public Customer(int cusID, String name, String address, int zipCode,
 			String city, String phoneNumber, String email) {
 		this.setCustomerID(cusID);
 		this.setName(name);
@@ -27,6 +27,9 @@ public class Customer {
 		this.setEmail(email);
 	}
 
+	public Customer() {
+	}
+
 	public int getCustomerID() {
 		return CustomerID;
 	}
@@ -34,11 +37,11 @@ public class Customer {
 	public void setCustomerID(int cusID) {
 		this.CustomerID = cusID;
 	}
-	public String getZipCode() {
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(String zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 

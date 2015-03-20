@@ -131,7 +131,7 @@ public class DBCustomer implements IFDBCustomer {
 			results = stmt.executeQuery(query);
 
 			while (results.next()) {
-				Customer cusObj = new Customer(); // TODO
+				Customer cusObj = new Customer(); 
 				cusObj = buildCustomer(results);
 				list.add(cusObj);
 			}// end while
@@ -173,31 +173,26 @@ public class DBCustomer implements IFDBCustomer {
 
 	// method to build an Customer object
 	private Customer buildCustomer(ResultSet results) {
-		Employee empObj = new Employee();
-        try{ // the columns from the table emplayee  are used
-              empObj.setFname(results.getString("fname"));
-              empObj.setMinit(results.getString("minit"));
-              empObj.setLname(results.getString("lname"));
-              empObj.setSsn(results.getString("ssn"));
-              empObj.setBdate(results.getString("bdate"));
-              empObj.setAddress(results.getString("address"));
-              empObj.setSex(results.getString("sex"));
-              empObj.setSalary(results.getDouble("salary"));
-              empObj.setSupervisor(new Employee(results.getString("superssn")));
-              empObj.setDepartment(new Department(results.getInt("dno")));
-        }
-       catch(Exception e)
-       {
-           System.out.println("error in building the employee object");
-       }
-       return empObj;
+		Customer cusObj = new Customer();
+		try { // the columns from the table Customer are used
+			cusObj.setCustomerID(results.getInt("customerID"));
+			cusObj.setName(results.getString("name"));
+			cusObj.setAddress(results.getString("address"));
+			cusObj.setZipCode(results.getInt("zipcode"));
+			cusObj.setCity(results.getString("city"));
+			cusObj.setPhoneNumber(results.getString("phoneno"));
+			cusObj.setEmail(results.getString("email"));
+
+		} catch (Exception e) {
+			System.out.println("error in building the Customer object");
+		}
+		return cusObj;
 	}
 
 	// method to build the query
 	private String buildQuery(String wClause) {
-		// String
-		// query="SELECT fname, minit,lname,ssn, address, bdate,sex, salary, superssn,dno  FROM employee";
-		String query = "";
+		String query = "SELECT customerID, name, address, zipcode, city, phoneno, email FROM Customer";
+
 		if (wClause.length() > 0)
 			query = query + " WHERE " + wClause;
 
