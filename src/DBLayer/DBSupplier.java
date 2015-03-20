@@ -1,7 +1,6 @@
 package DBLayer;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.*;
 
 import ModelLayer.*;
@@ -34,8 +33,27 @@ public class DBSupplier {
 	
 	public int insert (Supplier s) throws Exception
 	{
+		int rc = -1;
+		String query="INSERT INTO Supplier(name, address, country, phoneNo, email)	VALUES('"+
+		s.getName() 	+ "','" +
+		s.getAddress()	+ "','" +
+		s.getCountry()	+ "','" +
+		s.getPhoneno()	+ "','" +
+		s.getEmail()	+ "')";
 		
-		return 0;
+		System.out.println("insert: "+query);
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}//endTry
+		catch(SQLException e)
+		{
+			System.out.println("Supplier not created!");
+			throw new Exception("Supplier is not inserted correctly!");
+		}
+		return rc;
 	}
 	
 	public int update(Supplier s)
