@@ -78,13 +78,28 @@ public class DBSupplier {
 		{
 			System.out.println("Update Exception in Supplier: " +e);
 		}//endCatch
-		return 0;
+		return rc;
 	}//endUpdate
 	
-	public int delete(Supplier s)
+	public int delete(int id)
 	{
-		//TODO delete function from DB
-		return 0;
+		int rc = -1;
+		
+		String query="DELETE FROM Supplier WHERE supplierID = '"+
+		id + "'";
+		System.out.println(query);
+		try
+		{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}//endTry
+		catch(SQLException e)
+		{
+			System.out.println("Update exception in Supplier database: "+e);
+		}
+		return rc;
 	}
 	
 	public ArrayList<Supplier> miscWhere(String wClause, boolean retrieveAssociation)
