@@ -52,15 +52,34 @@ public class DBSupplier {
 		{
 			System.out.println("Supplier not created!");
 			throw new Exception("Supplier is not inserted correctly!");
-		}
+		}//endCatch
 		return rc;
-	}
+	}//endInsert
 	
 	public int update(Supplier s)
 	{
-		//TODO update function
+		int rc=-1;
+		
+		String query="UPDATE Supplier SET "+
+		"name ='" + s.getName() +"', "+
+		"address ='" + s.getAddress()+"', "+
+		"country ='" + s.getCountry()+"', "+
+		"phoneNo ='" + s.getCountry()+"', "+
+		"email ='"   + s.getEmail()+"'";
+		System.out.println("Update query: " + query);
+		
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}//endTry
+		catch(SQLException e)
+		{
+			System.out.println("Update Exception in Supplier: " +e);
+		}//endCatch
 		return 0;
-	}
+	}//endUpdate
 	
 	public int delete(Supplier s)
 	{
