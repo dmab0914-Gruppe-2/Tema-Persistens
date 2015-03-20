@@ -3,6 +3,8 @@
  */
 package DBLayer;
 
+import java.util.ArrayList;
+
 import ModelLayer.Product;
 
 /**
@@ -10,6 +12,8 @@ import ModelLayer.Product;
  *
  */
 public interface IFDBProduct {
+	
+	public ArrayList<Product> getAllProducts();
 
 	public boolean addProduct(Product p);
 	
