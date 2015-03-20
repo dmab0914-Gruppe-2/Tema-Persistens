@@ -13,22 +13,22 @@ public class DBSupplier {
 		con = DBConnection.getInstance().getDBcon();
 	}
 	
-	public ArrayList<Supplier> getAllSuppliers(boolean retrieveAssociation)
+	public ArrayList<Supplier> getAllSuppliers( )
 	{
-		return miscWhere("", retrieveAssociation);
+		return miscWhere("");
 	}
 	
-	public Supplier findSupplier(int id, boolean retrieveAssociation)
+	public Supplier findSupplier(int id  )
 	{
 		String wClause = " supplierID" + id + "'";
-		return singleWhere(wClause, retrieveAssociation);
+		return singleWhere(wClause );
 	}//endFindSupplier
 	
 	public Supplier searchSupplier(String sname, boolean ra)
 	{
 		String wClause = "name like %" + sname + "%'";
 		System.out.println("Search Supplier: "+ wClause);
-		return singleWhere(wClause, ra);
+		return singleWhere(wClause);
 	}
 	
 	public int insert (Supplier s) throws Exception
@@ -102,7 +102,7 @@ public class DBSupplier {
 		return rc;
 	}
 	
-	public ArrayList<Supplier> miscWhere(String wClause, boolean retrieveAssociation)
+	public ArrayList<Supplier> miscWhere(String wClause )
 	{
 		ResultSet results;
 		ArrayList<Supplier> list = new ArrayList<Supplier>();
@@ -120,14 +120,6 @@ public class DBSupplier {
 				list.add(s);
 			}//endWhile
 			stmt.close();
-			if(retrieveAssociation)
-			{
-				for(Supplier su : list)
-				{
-					int id = su.getId();
-					String n = su.getName();
-				}//endFor
-			}//endIf
 		}//endTry
 		catch(Exception e)
 		{
@@ -137,7 +129,7 @@ public class DBSupplier {
 		return list;
 	}//endMiscWhere
 	
-	private Supplier singleWhere(String wClause, boolean retrieveAssociation)
+	private Supplier singleWhere(String wClause)
 	{
 		ResultSet results;
 		Supplier s = new Supplier();
@@ -151,14 +143,6 @@ public class DBSupplier {
 			if(results.next()){
 				s = buildSupplier(results);
 				stmt.close();
-				if(retrieveAssociation)
-				{
-					
-				}
-				else
-				{
-					s = null;
-				}
 			}
 		}
 			
