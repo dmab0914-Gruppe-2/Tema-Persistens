@@ -17,6 +17,13 @@ public class Product {
 	private String supplier;
 	
 	/**
+	 * Creates an empty Product object, that's meant to be build on afterwards.
+	 */
+	public Product() {
+		
+	}
+	
+	/**
 	 * Create Product
 	 * @param name	The products name
 	 * @param purchasePrice	the price for which the product have been bought from supplier
