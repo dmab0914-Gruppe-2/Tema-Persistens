@@ -8,6 +8,7 @@ package ModelLayer;
  *
  */
 public class Customer {
+	private int CustomerID; // The CustomerID primary key from DB
 	private String name; // The persons name
 	private String address; // The persons address
 	private String zipCode;
@@ -15,9 +16,9 @@ public class Customer {
 	private String phoneNumber; // THe persons phone number
 	private String email;
 
-	public Customer(String name, String address, String zipCode, String city, String phoneNumber,
-			String email) {
-
+	public Customer(int cusID, String name, String address, String zipCode,
+			String city, String phoneNumber, String email) {
+		this.setCustomerID(cusID);
 		this.setName(name);
 		this.setAddress(address);
 		this.setZipCode(zipCode);
@@ -26,6 +27,13 @@ public class Customer {
 		this.setEmail(email);
 	}
 
+	public int getCustomerID() {
+		return CustomerID;
+	}
+
+	public void setCustomerID(int cusID) {
+		this.CustomerID = cusID;
+	}
 	public String getZipCode() {
 		return zipCode;
 	}
