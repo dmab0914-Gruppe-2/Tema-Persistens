@@ -5,6 +5,11 @@ import java.util.*;
 
 import ModelLayer.*;
 
+
+/**
+ * @author Andreas
+ *
+ */
 public class DBSupplier {
 
 	private Connection con;

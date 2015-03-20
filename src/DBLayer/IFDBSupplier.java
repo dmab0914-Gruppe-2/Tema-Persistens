@@ -2,6 +2,11 @@ package DBLayer;
 import ModelLayer.*;
 import java.util.ArrayList;
 
+
+/**
+ * @author Andreas
+ *
+ */
 public interface IFDBSupplier {
 	//get all departments
 	public ArrayList<Supplier> getAllSuppliers();
