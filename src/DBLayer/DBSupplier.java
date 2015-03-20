@@ -14,22 +14,20 @@ public class DBSupplier {
 		con = DBConnection.getInstance().getDBcon();
 	}
 	
-	public ArrayList<Supplier> getAllSuppliers()
+	public ArrayList<Supplier> getAllSuppliers(boolean retrieveAssociation)
 	{
-		//TODO generer kode til at returnere alle suppliers
-		return null;
+		return miscWhere("", retrieveAssociation);
 	}
 	
-	public Supplier findSupplier()
+	public Supplier findSupplier(int id, boolean retrieveAssociation)
 	{
-		// TODO generer kode til at returnere en supplier fra DB
-		//return null;
-		return null;
-	}
+		String wClause = " supplierID" + id + "'";
+		return singleWhere(wClause, retrieveAssociation);
+	}//endFindSupplier
 	
 	public Supplier searchSupplier(String sname, boolean ra)
 	{
-		//TODO 
+		//
 		return null;
 	}
 	
@@ -50,6 +48,41 @@ public class DBSupplier {
 		//TODO delete function from DB
 		return 0;
 	}
+	
+	public ArrayList<Supplier> miscWhere(String wClause, boolean retrieveAssociation)
+	{
+		ResultSet results;
+		ArrayList<Supplier> list = new ArrayList<Supplier>();
+		String query = buildQuery(wClause);
+		
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			results = stmt.executeQuery(query);
+			
+			while(results.next())
+			{
+				Supplier s = new Supplier();
+				s = buildSupplier(results);
+				list.add(s);
+			}//endWhile
+			stmt.close();
+			if(retrieveAssociation)
+			{
+				for(Supplier su : list)
+				{
+					int id = su.getId();
+					String n = su.getName();
+				}//endFor
+			}//endIf
+		}//endTry
+		catch(Exception e)
+		{
+			System.out.println("Query exception - select: "+e);
+			e.printStackTrace();
+		}//endCatch
+		return list;
+	}//endMiscWhere
 	
 	private Supplier singleWhere(String wClause, boolean retrieveAssociation)
 	{
