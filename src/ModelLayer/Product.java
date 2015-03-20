@@ -9,10 +9,12 @@ package ModelLayer;
  */
 public class Product {
 
+	private int id;
 	private String name;
 	private double purchasePrice;
 	private double salesPrice;
 	private String countryOfOrigin;
+	private String supplier;
 	
 	/**
 	 * Create Product
@@ -21,7 +23,25 @@ public class Product {
 	 * @param salesPrice The price to sell the product for
 	 * @param countryOfOrigin	The country the product originates from.
 	 */
-	public Product(String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+	public Product(String supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+		this.supplier = supplier;
+		this.name = name;
+		this.purchasePrice = purchasePrice;
+		this.salesPrice = salesPrice;
+		this.countryOfOrigin = countryOfOrigin;
+	}
+	
+	/**
+	 * Create Product with id
+	 * @param id	The products id
+	 * @param name	The products name
+	 * @param purchasePrice	the price for which the product have been bought from supplier
+	 * @param salesPrice The price to sell the product for
+	 * @param countryOfOrigin	The country the product originates from.
+	 */
+	public Product(int id, String supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+		this.id = id;
+		this.supplier = supplier;
 		this.name = name;
 		this.purchasePrice = purchasePrice;
 		this.salesPrice = salesPrice;
@@ -82,6 +102,34 @@ public class Product {
 	 */
 	public void setCountryOfOrigin(String countryOfOrigin) {
 		this.countryOfOrigin = countryOfOrigin;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the supplier
+	 */
+	public String getSupplier() {
+		return supplier;
+	}
+
+	/**
+	 * @param supplier the supplier to set
+	 */
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
 	}
 	
 }
