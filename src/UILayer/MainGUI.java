@@ -4,7 +4,7 @@ package UILayer;
  * Main GUI and methods to access other GUIs
  * 
  * @author Andreas Reng Mogensen, Jacob Pedersen, Nicklas Welle, Ronnie Knudsen
- * @version (01/02-2014) dd/mm-yyyy
+ * @version (23/03-2015) dd/mm-yyyy
  */
 
 import javax.swing.JFrame;
