@@ -60,8 +60,14 @@ public class SupplierController implements IFSupplierController {
 	 */
 	@Override
 	public int updateSupplier(int id, String name, String address, String country, String phoneNo, String email) {
-		
-		return 0;
+	Supplier s = dbSupplier.findSupplier(id);
+	s.setAddress(address);
+	s.setCountry(country);
+	s.setEmail(email);
+	s.setName(name);
+	s.setPhoneno(phoneNo);
+	
+	return dbSupplier.update(s);
 	}
 
 	/* (non-Javadoc)
@@ -70,12 +76,6 @@ public class SupplierController implements IFSupplierController {
 	@Override
 	public int deleteSupplier(int id) {
 		return dbSupplier.delete(id);
-	}
-
-	@Override
-	public int updateSupplier(int id) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
