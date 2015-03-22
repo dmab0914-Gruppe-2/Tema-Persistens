@@ -1,19 +1,23 @@
 /**
- * 
+ *
  */
 package CtrLayer;
 
 import ModelLayer.Supplier;
+import DBLayer.DBSupplier;
 
 /**
  * @author Andreas
  *
  */
 public class SupplierController implements IFSupplierController {
+
+	DBSupplier dbSupplier;
+	
 	
 	public SupplierController()
 	{
-		
+		DBSupplier dbSupplier = new DBSupplier();
 	}
 
 	/* (non-Javadoc)
@@ -21,25 +25,42 @@ public class SupplierController implements IFSupplierController {
 	 */
 	@Override
 	public int addSupplier(String name, String address, String country, String phoneNo, String email) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		Supplier s = new Supplier(name, address, country, phoneNo, email);
+		int i = -1;
+		try {
+			i = dbSupplier.addSupplier(s);
+			if(i != -1)
+			{
+				System.out.println("Inserted Successfully\n "
+						+ "Rowcount: "+i);
+			}
+			else
+			{
+				System.out.println("ERROR While inserting Supplier\n"
+						+ "Rowcount: "+i);
+			}//endIf
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return i;
+	}//endAddSupplier
 
 	/* (non-Javadoc)
 	 * @see CtrLayer.IFSupplierController#findSupplier(int)
 	 */
 	@Override
 	public Supplier findSupplier(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (dbSupplier.findSupplier(id));
 	}
 
 	/* (non-Javadoc)
 	 * @see CtrLayer.IFSupplierController#updateSupplier(int)
 	 */
 	@Override
-	public int updateSupplier(int id) {
-		// TODO Auto-generated method stub
+	public int updateSupplier(int id, String name, String address, String country, String phoneNo, String email) {
+		
 		return 0;
 	}
 
@@ -48,6 +69,11 @@ public class SupplierController implements IFSupplierController {
 	 */
 	@Override
 	public int deleteSupplier(int id) {
+		return dbSupplier.delete(id);
+	}
+
+	@Override
+	public int updateSupplier(int id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
