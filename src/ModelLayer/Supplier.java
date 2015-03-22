@@ -23,6 +23,15 @@ public class Supplier {
 		this.id = i;
 	}
 	
+	public Supplier(String n, String a, String c, String p, String e)
+	{
+		this.name = n;
+		this.address = a;
+		this.country = c;
+		this.phoneno = p;
+		this.email = e;
+	}
+	
 	public Supplier(String n, int i)
 	{
 		this.name = n;
