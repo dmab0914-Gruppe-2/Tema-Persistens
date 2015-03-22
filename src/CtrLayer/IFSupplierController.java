@@ -12,4 +12,7 @@ public interface IFSupplierController {
 	
 	public int deleteSupplier(int id);
 
+	int updateSupplier(int id, String name, String address, String country,
+			String phoneNo, String email);
+
 }
