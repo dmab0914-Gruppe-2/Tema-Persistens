@@ -13,30 +13,30 @@ import ModelLayer.*;
 public class DBSupplier {
 
 	private Connection con;
-	
+
 	public DBSupplier(){
 		con = DBConnection.getInstance().getDBcon();
 	}
-	
+
 	public ArrayList<Supplier> getAllSuppliers( )
 	{
 		return miscWhere("");
 	}
-	
+
 	public Supplier findSupplier(int id  )
 	{
 		String wClause = " supplierID" + id + "'";
 		return singleWhere(wClause );
 	}//endFindSupplier
-	
+
 	public Supplier searchSupplier(String sname, boolean ra)
 	{
 		String wClause = "name like %" + sname + "%'";
 		System.out.println("Search Supplier: "+ wClause);
 		return singleWhere(wClause);
 	}
-	
-	public int insert (Supplier s) throws Exception
+
+	public int addSupplier (Supplier s) throws Exception
 	{
 		int rc = -1;
 		String query="INSERT INTO Supplier(name, address, country, phoneNo, email)	VALUES('"+
@@ -45,7 +45,7 @@ public class DBSupplier {
 		s.getCountry()	+ "','" +
 		s.getPhoneno()	+ "','" +
 		s.getEmail()	+ "')";
-		
+
 		System.out.println("insert: "+query);
 		try{
 			Statement stmt = con.createStatement();
@@ -60,11 +60,11 @@ public class DBSupplier {
 		}//endCatch
 		return rc;
 	}//endInsert
-	
+
 	public int update(Supplier s)
 	{
 		int rc=-1;
-		
+
 		String query="UPDATE Supplier SET "+
 		"name ='" + s.getName() +"', "+
 		"address ='" + s.getAddress()+"', "+
@@ -72,7 +72,7 @@ public class DBSupplier {
 		"phoneNo ='" + s.getCountry()+"', "+
 		"email ='"   + s.getEmail()+"'";
 		System.out.println("Update query: " + query);
-		
+
 		try{
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
@@ -85,11 +85,11 @@ public class DBSupplier {
 		}//endCatch
 		return rc;
 	}//endUpdate
-	
+
 	public int delete(int id)
 	{
 		int rc = -1;
-		
+
 		String query="DELETE FROM Supplier WHERE supplierID = '"+
 		id + "'";
 		System.out.println(query);
@@ -106,18 +106,18 @@ public class DBSupplier {
 		}
 		return rc;
 	}
-	
+
 	public ArrayList<Supplier> miscWhere(String wClause )
 	{
 		ResultSet results;
 		ArrayList<Supplier> list = new ArrayList<Supplier>();
 		String query = buildQuery(wClause);
-		
+
 		try{
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			results = stmt.executeQuery(query);
-			
+
 			while(results.next())
 			{
 				Supplier s = new Supplier();
@@ -133,7 +133,7 @@ public class DBSupplier {
 		}//endCatch
 		return list;
 	}//endMiscWhere
-	
+
 	private Supplier singleWhere(String wClause)
 	{
 		ResultSet results;
@@ -144,21 +144,21 @@ public class DBSupplier {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			results = stmt.executeQuery(query);
-			
+
 			if(results.next()){
 				s = buildSupplier(results);
 				stmt.close();
 			}
 		}
-			
+
 			catch(Exception e)
 			{
 				System.out.println("Query exception: "+e);
 			}
-		
+
 		return s;
 	}
-	
+
 	private String buildQuery(String s)
 	{
 		String query = "SELECT name, supplierID FROM Supplier";
@@ -169,7 +169,7 @@ public class DBSupplier {
 		}
 		return query;
 	}
-	
+
 	private Supplier buildSupplier(ResultSet results)
 	{
 		Supplier s = new Supplier();
@@ -179,9 +179,8 @@ public class DBSupplier {
 		}
 		catch(Exception e){
 			System.out.println("Error in building the Supplier Object!" + e);
-			
+
 		}
 		return s;
 	}
 }
-
