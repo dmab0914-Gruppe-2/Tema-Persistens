@@ -7,6 +7,6 @@ package UILayer;
  * @author Andreas
  *
  */
-public class SupplierUI {
+public class SupplierGUI {
 
 }
