@@ -8,11 +8,8 @@ public interface IFSupplierController {
 	
 	public Supplier findSupplier(int id);
 	
-	public int updateSupplier(int id);
-	
 	public int deleteSupplier(int id);
 
-	int updateSupplier(int id, String name, String address, String country,
-			String phoneNo, String email);
+	public int updateSupplier(int id, String name, String address, String country, String phoneNo, String email);
 
 }
