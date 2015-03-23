@@ -106,7 +106,7 @@ public class DBSupplier {
 		return rc;
 	}
 
-	public ArrayList<Supplier> miscWhere(String wClause )
+	public ArrayList<Supplier> miscWhere(String wClause)
 	{
 		ResultSet results;
 		ArrayList<Supplier> list = new ArrayList<Supplier>();
@@ -160,7 +160,7 @@ public class DBSupplier {
 
 	private String buildQuery(String s)
 	{
-		String query = "SELECT * FROM Supplier";
+		String query = "SELECT supplierID, name, address, country, phoneNo, email FROM Supplier";
 		System.out.println(query);
 		if(s.length()>0)
 		{
