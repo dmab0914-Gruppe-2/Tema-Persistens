@@ -30,9 +30,9 @@ public class MainGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGUI() {
-		//SalesGUI salesGUI = new SalesGUI();
-		//salesGUI.setPreferredSize(new Dimension(750, 500));
-		//salesGUI.setMinimumSize(new Dimension(750, 500));
+		ProductGUI productGUI = new ProductGUI();
+		productGUI.setPreferredSize(new Dimension(750, 500));
+		productGUI.setMinimumSize(new Dimension(750, 500));
 
 		//SupplierGUI supplierGUI = new SupplierGUI();
 		//supplierGUI.setPreferredSize(new Dimension(750, 500));
