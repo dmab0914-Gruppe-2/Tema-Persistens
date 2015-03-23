@@ -30,13 +30,13 @@ public class MainGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGUI() {
-		//SalesGUI salesGUI = new SalesGUI();
-		//salesGUI.setPreferredSize(new Dimension(750, 500));
-		//salesGUI.setMinimumSize(new Dimension(750, 500));
+		ProductGUI productGUI = new ProductGUI();
+		productGUI.setPreferredSize(new Dimension(750, 500));
+		productGUI.setMinimumSize(new Dimension(750, 500));
 
-		//SupplierGUI supplierGUI = new SupplierGUI();
-		//supplierGUI.setPreferredSize(new Dimension(750, 500));
-		//supplierGUI.setMinimumSize(new Dimension(750, 500));
+		SupplierGUI supplierGUI = new SupplierGUI();
+		supplierGUI.setPreferredSize(new Dimension(750, 500));
+		supplierGUI.setMinimumSize(new Dimension(750, 500));
 
 		setMinimumSize(new Dimension(800, 600));
 		setTitle("Tema Persistens - GUI");
@@ -59,7 +59,7 @@ public class MainGUI extends JFrame {
 
 		//tabbedPane.addTab("Person", null, personGUI, null); //Loads personGUI from PersonGUI class
 
-		//tabbedPane.addTab("Supplier", null, supplierGUI, null); //Loads productGUI from ProductGUI class
+		tabbedPane.addTab("Supplier", null, supplierGUI, null); //Loads productGUI from ProductGUI class
 		contentPane.setLayout(gl_contentPane);
 	}
 
