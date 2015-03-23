@@ -60,7 +60,7 @@ public class MainGUI extends JFrame {
 				Alignment.LEADING).addComponent(tabbedPane,
 						GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE));
 
-		//tabbedPane.addTab("Sale", null, salesGUI, null); //Loads salesGUI from SalesGUI class
+		tabbedPane.addTab("Product", null, productGUI, null); //Loads salesGUI from SalesGUI class
 
 		//tabbedPane.addTab("Person", null, personGUI, null); //Loads personGUI from PersonGUI class
 		tabbedPane.addTab("Customer", null, customerGUI, null);

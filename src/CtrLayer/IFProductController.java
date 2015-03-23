@@ -4,6 +4,7 @@
 package CtrLayer;
 
 import ModelLayer.Product;
+import ModelLayer.Supplier;
 
 /**
  * @author Jacob
@@ -20,13 +21,15 @@ public interface IFProductController {
 	 * @param countryOfOrigin
 	 * @return
 	 */
-	public boolean addProduct(String supplierName, String name, double purchasePrice, double salesPrice,  String countryOfOrigin);
+	public boolean addProduct(Supplier supplier, String name, double purchasePrice, double salesPrice,  String countryOfOrigin);
 	
-	public Product findProduct(String name);
+	public Product findProduct(String name, boolean retriveAssociation);
 	
-	public boolean updateProduct(String oldName, String newName, double purchasePrice, double salesPrice, String countryOfOrigin);
+	public boolean updateProduct(String oldName, String newName, Supplier supplier, double purchasePrice, double salesPrice, String countryOfOrigin);
 	
 	public boolean addItem(String productName, String warehouse, int amount);
 	
 	public boolean deleteProduct(String name);
+	
+	//public 
 }

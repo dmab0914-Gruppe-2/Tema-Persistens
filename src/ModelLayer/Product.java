@@ -14,7 +14,8 @@ public class Product {
 	private double purchasePrice;
 	private double salesPrice;
 	private String countryOfOrigin;
-	private String supplier;
+	private Supplier supplier;
+	//private ArrayList<Storage> storage;
 	
 	/**
 	 * Creates an empty Product object, that's meant to be build on afterwards.
@@ -30,7 +31,7 @@ public class Product {
 	 * @param salesPrice The price to sell the product for
 	 * @param countryOfOrigin	The country the product originates from.
 	 */
-	public Product(String supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+	public Product(Supplier supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
 		this.supplier = supplier;
 		this.name = name;
 		this.purchasePrice = purchasePrice;
@@ -46,7 +47,7 @@ public class Product {
 	 * @param salesPrice The price to sell the product for
 	 * @param countryOfOrigin	The country the product originates from.
 	 */
-	public Product(int id, String supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+	public Product(int id, Supplier supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
 		this.id = id;
 		this.supplier = supplier;
 		this.name = name;
@@ -128,14 +129,14 @@ public class Product {
 	/**
 	 * @return the supplier
 	 */
-	public String getSupplier() {
+	public Supplier getSupplier() {
 		return supplier;
 	}
 
 	/**
 	 * @param supplier the supplier to set
 	 */
-	public void setSupplier(String supplier) {
+	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
 	

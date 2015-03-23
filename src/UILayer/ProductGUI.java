@@ -2,15 +2,25 @@ package UILayer;
 
 import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
+
 import java.awt.Dimension;
+
 import javax.swing.JSplitPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.Component;
+
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProductGUI extends JPanel {
+	
+	JButton btnNewButton;
 
 	/**
 	 * Create the panel.
@@ -50,14 +60,23 @@ public class ProductGUI extends JPanel {
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 489, Short.MAX_VALUE))
 					.addContainerGap())
 		);
+		
+		btnNewButton = new JButton("List all Products");
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 212, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 489, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(261)
+					.addComponent(btnNewButton)
+					.addContainerGap(205, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		layeredPane.setLayout(gl_layeredPane);
@@ -73,6 +92,15 @@ public class ProductGUI extends JPanel {
 					.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		setLayout(groupLayout);
-
+		
+		actionListeners();
+	}
+	
+	private void actionListeners() {
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProductsListGUI.main(null); //Open ProductListGUI in new window.
+			}
+		});
 	}
 }
