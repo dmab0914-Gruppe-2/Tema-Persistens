@@ -67,34 +67,35 @@ public class SupplierListGUI {
 		frmRegisteredProducts.setMinimumSize(new Dimension(650, 0));
 		frmRegisteredProducts.setBounds(100, 100, 450, 300);
 		frmRegisteredProducts.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		frmRegisteredProducts.getContentPane().add(scrollPane, BorderLayout.CENTER);
-		
-		supplierTable = new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-						"ID", "Name", "Purchase price", "Sales price", "Country of origin", "Supplier name"
-				}
-				); /*{
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, Double.class, Double.class, Double.class, Integer.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});*/
-		table = new JTable(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Name", "Address", "Country", "Email", "Phone"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class, String.class, String.class, Object.class
-			};
+		frmRegisteredProducts.getContentPane().add(scrollPane,
+				BorderLayout.CENTER);
+
+		supplierTable = new DefaultTableModel(new Object[][] {}, new String[] {
+				"ID", "Name", "Purchase price", "Sales price",
+				"Country of origin", "Supplier name" }); /*
+														 * { Class[] columnTypes
+														 * = new Class[] {
+														 * String.class,
+														 * String.class,
+														 * Double.class,
+														 * Double.class,
+														 * Double.class,
+														 * Integer.class,
+														 * String.class };
+														 * public Class
+														 * getColumnClass(int
+														 * columnIndex) { return
+														 * columnTypes
+														 * [columnIndex]; } });
+														 */
+		table = new JTable(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Name", "Address", "Country", "Email",
+						"Phone" }) {
+			Class[] columnTypes = new Class[] { Integer.class, String.class,
+					String.class, String.class, String.class, Object.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -105,19 +106,13 @@ public class SupplierListGUI {
 	/**
 	 * Load all products into a row each in the table.
 	 */
-	private void loadSuppliersTable()
-	{
+	private void loadSuppliersTable() {
 		ArrayList<Supplier> suppliers = scon.getAllProducts();
-		for(Supplier s : suppliers)
-		{
-			supplierTable.addRow(new Object []{
-					Integer.toString(s.getId()),
-					s.getName(),
-					s.getAddress(),
-					s.getCountry(),
-					s.getEmail(),
+		for (Supplier s : suppliers) {
+			supplierTable.addRow(new Object[] { Integer.toString(s.getId()),
+					s.getName(), s.getAddress(), s.getCountry(), s.getEmail(),
 					s.getPhoneno()
-					
+
 			});
 		}
 		supplierTable.newDataAvailable(null);

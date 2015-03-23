@@ -1,29 +1,29 @@
 package DBLayer;
+
 import ModelLayer.*;
 import java.util.ArrayList;
-
 
 /**
  * @author Andreas
  *
  */
 public interface IFDBSupplier {
-	//get all departments
+	// get all departments
 	public ArrayList<Supplier> getAllSuppliers();
-	
-	//get one Supplier having ID
+
+	// get one Supplier having ID
 	public Supplier findSupplier(int sno);
-	
-	//find one supplier having the supplier name
+
+	// find one supplier having the supplier name
 	public Supplier searchSupplierByName(String sname);
-	
-	//insert new supplier
+
+	// insert new supplier
 	public int insert(Supplier s);
-	
-	//update Supplier
-	public int update (Supplier s);
-	
-	//delete supplier
+
+	// update Supplier
+	public int update(Supplier s);
+
+	// delete supplier
 	public int delete(Supplier s);
 
 }

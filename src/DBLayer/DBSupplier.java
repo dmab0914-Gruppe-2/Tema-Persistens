@@ -5,7 +5,6 @@ import java.util.*;
 
 import ModelLayer.*;
 
-
 /**
  * @author Andreas
  *
@@ -14,173 +13,153 @@ public class DBSupplier {
 
 	private Connection con;
 
-	public DBSupplier(){
+	public DBSupplier() {
 		con = DBConnection.getInstance().getDBcon();
 	}
 
-	public ArrayList<Supplier> getAllSuppliers( )
-	{
+	public ArrayList<Supplier> getAllSuppliers() {
 		return miscWhere("");
 	}
 
-	public Supplier findSupplier(int id  )
-	{
+	public Supplier findSupplier(int id) {
 		String wClause = " supplierID =" + id + "";
-		return singleWhere(wClause );
-	}//endFindSupplier
+		return singleWhere(wClause);
+	}// endFindSupplier
 
-	public Supplier searchSupplier(String sname)
-	{
+	public Supplier searchSupplier(String sname) {
 		String wClause = "name like '%" + sname + "%'";
-		System.out.println("Search Supplier: "+ wClause);
+		System.out.println("Search Supplier: " + wClause);
 		return singleWhere(wClause);
 	}
 
-	public int addSupplier (Supplier s) throws Exception
-	{
+	public int addSupplier(Supplier s) throws Exception {
 		int rc = -1;
-		String query="INSERT INTO Supplier(name, address, country, phoneNo, email)	VALUES('"+
-		s.getName() 	+ "','" +
-		s.getAddress()	+ "','" +
-		s.getCountry()	+ "','" +
-		s.getPhoneno()	+ "','" +
-		s.getEmail()	+ "')";
+		String query = "INSERT INTO Supplier(name, address, country, phoneNo, email)	VALUES('"
+				+ s.getName()
+				+ "','"
+				+ s.getAddress()
+				+ "','"
+				+ s.getCountry()
+				+ "','" + s.getPhoneno() + "','" + s.getEmail() + "')";
 
-		System.out.println("insert: "+query);
-		try{
+		System.out.println("insert: " + query);
+		try {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			rc = stmt.executeUpdate(query);
 			stmt.close();
-		}//endTry
-		catch(SQLException e)
-		{
+		}// endTry
+		catch (SQLException e) {
 			System.out.println("Supplier not created!");
 			throw new Exception("Supplier is not inserted correctly!");
-		}//endCatch
+		}// endCatch
 		return rc;
-	}//endInsert
+	}// endInsert
 
-	public int update(Supplier s)
-	{
-		int rc=-1;
-
-		String query="UPDATE Supplier SET "+
-		"name ='" + s.getName() +"', "+
-		"address ='" + s.getAddress()+"', "+
-		"country ='" + s.getCountry()+"', "+
-		"phoneNo ='" + s.getCountry()+"', "+
-		"email ='"   + s.getEmail()+"'";
-		System.out.println("Update query: " + query);
-
-		try{
-			Statement stmt = con.createStatement();
-			stmt.setQueryTimeout(5);
-			rc = stmt.executeUpdate(query);
-			stmt.close();
-		}//endTry
-		catch(SQLException e)
-		{
-			System.out.println("Update Exception in Supplier: " +e);
-		}//endCatch
-		return rc;
-	}//endUpdate
-
-	public int delete(int id)
-	{
+	public int update(Supplier s) {
 		int rc = -1;
 
-		String query="DELETE FROM Supplier WHERE supplierID = "+id;
-		System.out.println(query);
-		try
-		{
+		String query = "UPDATE Supplier SET " + "name ='" + s.getName() + "', "
+				+ "address ='" + s.getAddress() + "', " + "country ='"
+				+ s.getCountry() + "', " + "phoneNo ='" + s.getCountry()
+				+ "', " + "email ='" + s.getEmail() + "'";
+		System.out.println("Update query: " + query);
+
+		try {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			rc = stmt.executeUpdate(query);
 			stmt.close();
-		}//endTry
-		catch(SQLException e)
-		{
-			System.out.println("Update exception in Supplier database: "+e);
+		}// endTry
+		catch (SQLException e) {
+			System.out.println("Update Exception in Supplier: " + e);
+		}// endCatch
+		return rc;
+	}// endUpdate
+
+	public int delete(int id) {
+		int rc = -1;
+
+		String query = "DELETE FROM Supplier WHERE supplierID = " + id;
+		System.out.println(query);
+		try {
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}// endTry
+		catch (SQLException e) {
+			System.out.println("Update exception in Supplier database: " + e);
 		}
 		return rc;
 	}
 
-	public ArrayList<Supplier> miscWhere(String wClause)
-	{
+	public ArrayList<Supplier> miscWhere(String wClause) {
 		ResultSet results;
 		ArrayList<Supplier> list = new ArrayList<Supplier>();
 		String query = buildQuery(wClause);
 
-		try{
+		try {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			results = stmt.executeQuery(query);
 
-			while(results.next())
-			{
+			while (results.next()) {
 				Supplier s = new Supplier();
 				s = buildSupplier(results);
 				list.add(s);
-			}//endWhile
+			}// endWhile
 			stmt.close();
-		}//endTry
-		catch(Exception e)
-		{
-			System.out.println("Query exception - select: "+e);
+		}// endTry
+		catch (Exception e) {
+			System.out.println("Query exception - select: " + e);
 			e.printStackTrace();
-		}//endCatch
+		}// endCatch
 		return list;
-	}//endMiscWhere
+	}// endMiscWhere
 
-	private Supplier singleWhere(String wClause)
-	{
+	private Supplier singleWhere(String wClause) {
 		ResultSet results;
 		Supplier s = new Supplier();
 		String query = buildQuery(wClause);
 		System.out.println(query);
-		try{
+		try {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			results = stmt.executeQuery(query);
 
-			if(results.next()){
+			if (results.next()) {
 				s = buildSupplier(results);
 				stmt.close();
 			}
 		}
 
-			catch(Exception e)
-			{
-				System.out.println("Query exception: "+e);
-			}
+		catch (Exception e) {
+			System.out.println("Query exception: " + e);
+		}
 
 		return s;
 	}
 
-	private String buildQuery(String s)
-	{
+	private String buildQuery(String s) {
 		String query = "SELECT supplierID, name, address, country, phoneNo, email FROM Supplier";
 		System.out.println(query);
-		if(s.length()>0)
-		{
-			query = query+" WHERE "+s;
+		if (s.length() > 0) {
+			query = query + " WHERE " + s;
 		}
 		return query;
 	}
 
-	private Supplier buildSupplier(ResultSet results)
-	{
+	private Supplier buildSupplier(ResultSet results) {
 		Supplier s = new Supplier();
-		try{
+		try {
 			s.setName(results.getString("name"));
 			s.setId(results.getInt("supplierID"));
 			s.setAddress(results.getString("address"));
 			s.setCountry(results.getString("country"));
 			s.setEmail(results.getString("email"));
 			s.setPhoneno(results.getString("phoneNo"));
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.out.println("Error in building the Supplier Object!" + e);
 
 		}
