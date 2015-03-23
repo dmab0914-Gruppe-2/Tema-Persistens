@@ -3,6 +3,8 @@
  */
 package CtrLayer;
 
+import java.util.ArrayList;
+
 import ModelLayer.Supplier;
 import DBLayer.DBSupplier;
 
@@ -81,6 +83,10 @@ public class SupplierController implements IFSupplierController {
 	@Override
 	public int deleteSupplier(int id) {
 		return dbSupplier.delete(id);
+	}
+
+	public ArrayList<Supplier> getAllProducts() {
+		return dbSupplier.getAllSuppliers();
 	}
 
 }
