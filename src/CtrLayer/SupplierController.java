@@ -51,8 +51,13 @@ public class SupplierController implements IFSupplierController {
 	 * @see CtrLayer.IFSupplierController#findSupplier(int)
 	 */
 	@Override
-	public Supplier findSupplier(int id) {
+	public Supplier findSupplierID(int id) {
 		return (dbSupplier.findSupplier(id));
+	}
+	
+	public Supplier findSupplierName(String name)
+	{
+		return dbSupplier.searchSupplier(name);
 	}
 
 	/* (non-Javadoc)

@@ -31,7 +31,7 @@ public class DBSupplier {
 
 	public Supplier searchSupplier(String sname)
 	{
-		String wClause = "name like %" + sname + "%'";
+		String wClause = "name like '%" + sname + "%'";
 		System.out.println("Search Supplier: "+ wClause);
 		return singleWhere(wClause);
 	}

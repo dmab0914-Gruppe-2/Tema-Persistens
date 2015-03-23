@@ -6,7 +6,9 @@ public interface IFSupplierController {
 	
 	public int addSupplier(String name, String address, String country, String phoneNo, String email);
 	
-	public Supplier findSupplier(int id);
+	public Supplier findSupplierID(int id);
+	
+	public Supplier findSupplierName(String name);
 	
 	public int deleteSupplier(int id);
 

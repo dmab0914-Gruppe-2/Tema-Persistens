@@ -42,13 +42,13 @@ public class SupplierGUI extends JPanel {
 	JButton btnRevertChanges;
 	JButton btnFindByName;
 	private JTextField textField_id;
-	private Supplier supplier;
+	Supplier supplier;
 	
 	/**
 	 * Create the panel.
 	 */
 	public SupplierGUI() {
-		supplier = new Supplier(); 
+		Supplier supplier = new Supplier();
 		scon = new SupplierController();
 		setPreferredSize(new Dimension(750, 500));
 		setMinimumSize(new Dimension(750, 500));
@@ -261,7 +261,7 @@ public class SupplierGUI extends JPanel {
 		
 		if(i !=-1)
 		{
-			supplier = scon.findSupplier(i);
+			supplier = scon.findSupplierID(i);
 			textField_address.setText(supplier.getAddress());
 			textField_country.setText(supplier.getCountry());
 			textField_email.setText(supplier.getEmail());
@@ -271,6 +271,18 @@ public class SupplierGUI extends JPanel {
 			
 		}//endIf
 	}//endFindSupplier
+	
+	private void findSupplierName()
+	{		
+		String search = textField_idInput.getText();
+		supplier = scon.findSupplierName(search);
+		textField_address.setText(supplier.getAddress());
+		textField_country.setText(supplier.getCountry());
+		textField_email.setText(supplier.getEmail());
+		textField_name.setText(supplier.getName());
+		textField_phone.setText(supplier.getPhoneno());
+		textField_id.setText(Integer.toString(supplier.getId()));		
+	}//end findSupplierName
 	
 	private void addSupplier()
 	{
@@ -312,7 +324,12 @@ public class SupplierGUI extends JPanel {
 	
 	private void revertChanges()
 	{
-		
+		textField_address.setText(supplier.getAddress());
+		textField_country.setText(supplier.getCountry());
+		textField_email.setText(supplier.getEmail());
+		textField_name.setText(supplier.getName());
+		textField_phone.setText(supplier.getPhoneno());
+		textField_id.setText(Integer.toString(supplier.getId()));
 	}//end revertChanges()
 	
 	private void actionListerners()
@@ -344,6 +361,7 @@ public class SupplierGUI extends JPanel {
 		
 		btnFindByName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				findSupplierName();
 			}
 		});
 	}
