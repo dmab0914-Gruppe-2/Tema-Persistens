@@ -8,6 +8,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Component;
@@ -38,7 +39,7 @@ public class SupplierGUI extends JPanel {
 	JButton btnNewSupplier;
 	JButton btnCancel;
 	JButton btnClear;
-	JLabel label_id;
+	private JTextField textField_id;
 	
 	/**
 	 * Create the panel.
@@ -84,6 +85,11 @@ public class SupplierGUI extends JPanel {
 		
 		
 		JButton btnDeleteSupplier = new JButton("Delete Supplier");
+		btnDeleteSupplier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteSupplier();
+			}
+		});
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -115,7 +121,9 @@ public class SupplierGUI extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		
-		label_id = new JLabel("0");
+		textField_id = new JTextField();
+		textField_id.setEditable(false);
+		textField_id.setColumns(10);
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(
 			gl_layeredPane.createParallelGroup(Alignment.LEADING)
@@ -142,8 +150,8 @@ public class SupplierGUI extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnSave))
 						.addGroup(gl_layeredPane.createSequentialGroup()
-							.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+							.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblPhone)
 										.addComponent(lblEmail))
@@ -151,12 +159,12 @@ public class SupplierGUI extends JPanel {
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(textField_phone, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
 										.addComponent(textField_email, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-										.addComponent(label_id)))
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+										.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addComponent(lblNewLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(textField_country, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblAddress)
 										.addComponent(lblName))
@@ -211,7 +219,7 @@ public class SupplierGUI extends JPanel {
 									.addGap(18)
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
 										.addComponent(lblNewLabel_1)
-										.addComponent(label_id))))
+										.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 							.addPreferredGap(ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
 							.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnSave)
@@ -247,7 +255,7 @@ public class SupplierGUI extends JPanel {
 			textField_email.setText(s.getEmail());
 			textField_name.setText(s.getName());
 			textField_phone.setText(s.getPhoneno());
-			label_id.setText(Integer.toString(s.getId()));
+			textField_id.setText(Integer.toString(s.getId()));
 			
 		}//endIf
 	}//endFindSupplier
@@ -270,8 +278,25 @@ public class SupplierGUI extends JPanel {
 		textField_idInput.setText("");
 		textField_name.setText("");
 		textField_phone.setText("");
-		label_id.setText("0");
-	}
+		textField_id.setText("0");
+	}//endClearFields
+	
+	private void deleteSupplier()
+	{
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Supplier?", "Confirm deletion!",dialogButton);
+		if(dialogResult==0)
+		{
+			try
+			{
+				scon.deleteSupplier(Integer.parseInt(textField_idInput.getText()));	
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Not a number! " + e);
+			}//endCatch
+		}//endIf
+	}//end deleteSupplier()
 	
 	private void actionListerners()
 	{
