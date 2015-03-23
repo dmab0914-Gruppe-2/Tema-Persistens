@@ -16,5 +16,5 @@ public interface IFCustomerController {
 
 	public int updateCustomer(int customerID, String name, String address, int zipCode, String city, String phoneNumber, String email);
 
-	public int deleteCustomer(String phoneNumber);
+	public int deleteCustomer(int id);
 }

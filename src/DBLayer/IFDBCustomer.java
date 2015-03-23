@@ -28,4 +28,6 @@ public interface IFDBCustomer {
 	public int updateCustomer(Customer cus) throws Exception;
 
 	public Customer searchCustomerPhone(String phone, boolean b);
+	
+	public int delete(int id);
 }

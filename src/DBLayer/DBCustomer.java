@@ -98,10 +98,10 @@ public class DBCustomer implements IFDBCustomer {
 		return singleWhere(wClause, b);
 	}
 
-	public int delete(String phone) {
+	public int delete(int id) {
 		int rc = -1;
 
-		String query = "DELETE FROM Customer WHERE phoneno = '" + phone + "'";
+		String query = "DELETE FROM Customer WHERE customerID = '" + id + "'";
 		System.out.println("DELETE query:" + query);
 		try { // delete from Customer
 			Statement stmt = con.createStatement();

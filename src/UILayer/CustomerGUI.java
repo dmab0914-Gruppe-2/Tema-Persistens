@@ -9,8 +9,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -529,21 +529,34 @@ public class CustomerGUI extends JPanel {
 			String phone = txtPhone.getText();
 			String email = txtEmail.getText();
 			int id = Integer.parseInt(txtID.getText());
-			if(txtID.getText().length() >= 1){
-				int result = customerController.updateCustomer(id, name, address, zip, city, phone, email);
-				
-				if(result == 1) {
-				clearFields();
-				lblStatus.setText("Customer updated");
-				}else {
+			if (txtID.getText().length() >= 1) {
+				int result = customerController.updateCustomer(id, name,
+						address, zip, city, phone, email);
+
+				if (result == 1) {
+					clearFields();
+					lblStatus.setText("Customer updated");
+				} else {
 					lblStatus.setText("Error in update");
 				}
 			} else {
-			 lblStatus.setText("No custoemr is open");
+				lblStatus.setText("No custoemr is open");
 			}
 		}
 	}
+
 	private void deleteCustomer() {
-	
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(this,
+				"Are you sure you want to delete this customer?",
+				"Confirm deletion!", dialogButton);
+		if (dialogResult == 0) {
+			try {
+				customerController.deleteCustomer(Integer.parseInt(txtID.getText()));
+				//customerControllerller.deleteSupplier(Integer.parseInt(txtID.getText()));
+			} catch (NumberFormatException e) {
+				System.out.println("No customer open " + e);
+			}
+		}
 	}
 }

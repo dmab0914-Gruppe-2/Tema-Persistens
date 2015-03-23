@@ -54,8 +54,9 @@ public class CustomerController implements IFCustomerController {
 	}
 
 	@Override
-	public int deleteCustomer(String phoneNumber) {
-		return 0;
+	public int deleteCustomer(int id) {
+	 IFDBCustomer dbCus = new DBCustomer();
+	 return dbCus.delete(id);
 	}
 
 }
