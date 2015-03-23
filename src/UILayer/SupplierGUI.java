@@ -39,12 +39,15 @@ public class SupplierGUI extends JPanel {
 	JButton btnNewSupplier;
 	JButton btnCancel;
 	JButton btnClear;
+	JButton btnRevertChanges;
 	private JTextField textField_id;
+	private Supplier supplier;
 	
 	/**
 	 * Create the panel.
 	 */
 	public SupplierGUI() {
+		supplier = new Supplier(); 
 		scon = new SupplierController();
 		setPreferredSize(new Dimension(750, 500));
 		setMinimumSize(new Dimension(750, 500));
@@ -70,7 +73,7 @@ public class SupplierGUI extends JPanel {
 		
 		btnCancel = new JButton("Cancel");
 		
-		JButton btnRevertChanges = new JButton("Revert Changes");
+		btnRevertChanges = new JButton("Revert Changes");
 		
 		JLabel lblSupplier = new JLabel("Supplier");
 		lblSupplier.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -248,14 +251,13 @@ public class SupplierGUI extends JPanel {
 		
 		if(i !=-1)
 		{
-			Supplier s = new Supplier(); 
-			s = scon.findSupplier(i);
-			textField_address.setText(s.getAddress());
-			textField_country.setText(s.getCountry());
-			textField_email.setText(s.getEmail());
-			textField_name.setText(s.getName());
-			textField_phone.setText(s.getPhoneno());
-			textField_id.setText(Integer.toString(s.getId()));
+			supplier = scon.findSupplier(i);
+			textField_address.setText(supplier.getAddress());
+			textField_country.setText(supplier.getCountry());
+			textField_email.setText(supplier.getEmail());
+			textField_name.setText(supplier.getName());
+			textField_phone.setText(supplier.getPhoneno());
+			textField_id.setText(Integer.toString(supplier.getId()));
 			
 		}//endIf
 	}//endFindSupplier
@@ -298,6 +300,11 @@ public class SupplierGUI extends JPanel {
 		}//endIf
 	}//end deleteSupplier()
 	
+	private void revertChanges()
+	{
+		
+	}//end revertChanges()
+	
 	private void actionListerners()
 	{
 		
@@ -316,6 +323,12 @@ public class SupplierGUI extends JPanel {
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				clearFields();
+			}
+		});
+		
+		btnRevertChanges.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				revertChanges();
 			}
 		});
 	}
