@@ -25,16 +25,20 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import CtrLayer.ProductController;
+import CtrLayer.SupplierController;
 import ModelLayer.Product;
 
 @SuppressWarnings("serial")
 public class ProductGUI extends JPanel {
 
 	ProductController productController;
+	SupplierController supplierController;
 
 	JButton btnListAllProducts;
 	JButton btnFindProdukt;
 	JButton btnClearFields;
+	JButton btnDeleteProdukt;
+	JButton btnSave;
 	private JTextField textField_Name;
 	private JTextField textField_PurchasePrice;
 	private JTextField textField_SalesPrice;
@@ -47,6 +51,7 @@ public class ProductGUI extends JPanel {
 	 */
 	public ProductGUI() {
 		productController = new ProductController();
+		supplierController = new SupplierController();
 		setMinimumSize(new Dimension(750, 500));
 		setPreferredSize(new Dimension(750, 500));
 
@@ -59,7 +64,8 @@ public class ProductGUI extends JPanel {
 		panel.setMinimumSize(new Dimension(250, 500));
 		panel.setPreferredSize(new Dimension(250, 500));
 
-		JPanel panel_1 = new JPanel();
+		JPanel panel_1 = 
+				new JPanel();
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
@@ -109,7 +115,7 @@ public class ProductGUI extends JPanel {
 		textField_SupplierName = new JTextField();
 		textField_SupplierName.setColumns(10);
 
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 				gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -205,67 +211,67 @@ public class ProductGUI extends JPanel {
 
 		btnClearFields = new JButton("Clear Fields");
 
-		JButton btnDeleteProdukt = new JButton("Delete Product");
+		btnDeleteProdukt = new JButton("Delete Product");
 
 		JLabel lblProduct = new JLabel("Product");
 		lblProduct.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JSeparator separator = new JSeparator();
+		
+		JLabel lblSgProduktNavn = new JLabel("S\u00F8g Produkt navn:");
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.TRAILING)
+			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addComponent(lblProduct)
+					.addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(144, Short.MAX_VALUE)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-										.addGap(11)
-										.addComponent(lblProduct))
-										.addGroup(gl_panel.createSequentialGroup()
-												.addContainerGap()
-												.addComponent(btnFindProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
-												.addGroup(gl_panel.createSequentialGroup()
-														.addContainerGap()
-														.addComponent(textField_search, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
-														.addGroup(gl_panel.createSequentialGroup()
-																.addContainerGap()
-																.addComponent(btnDeleteProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
-																.addGroup(gl_panel.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(btnListAllProducts, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
-																		.addContainerGap())
-																		.addGroup(gl_panel.createSequentialGroup()
-																				.addContainerGap(144, Short.MAX_VALUE)
-																				.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE))
-																				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-																						.addContainerGap()
-																						.addComponent(btnClearFields, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-																						.addContainerGap())
-																						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-																								.addContainerGap()
-																								.addComponent(btnNewProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-																								.addContainerGap())
-				);
-		gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
+							.addComponent(textField_search, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+							.addComponent(btnDeleteProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+							.addComponent(btnListAllProducts, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+						.addComponent(btnClearFields, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+						.addComponent(btnNewProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+					.addContainerGap())
 				.addGroup(gl_panel.createSequentialGroup()
-						.addGap(16)
-						.addComponent(lblProduct)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(textField_search, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnFindProdukt)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnClearFields)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnNewProdukt)
-						.addGap(10)
-						.addComponent(btnDeleteProdukt)
-						.addGap(18)
-						.addComponent(btnListAllProducts)
-						.addGap(116)
-						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(123, Short.MAX_VALUE))
-				);
+					.addContainerGap()
+					.addComponent(lblSgProduktNavn)
+					.addContainerGap(46, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnFindProdukt, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(16)
+					.addComponent(lblProduct)
+					.addGap(18)
+					.addComponent(lblSgProduktNavn)
+					.addGap(3)
+					.addComponent(textField_search, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addComponent(btnFindProdukt)
+					.addGap(18)
+					.addComponent(btnClearFields)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewProdukt)
+					.addGap(10)
+					.addComponent(btnDeleteProdukt)
+					.addGap(18)
+					.addComponent(btnListAllProducts)
+					.addGap(92)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(123, Short.MAX_VALUE))
+		);
 		panel.setLayout(gl_panel);
 		layeredPane.setLayout(gl_layeredPane);
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -309,6 +315,26 @@ public class ProductGUI extends JPanel {
 				textField_SalesPrice.setText("");
 				textField_CountryOfOrigin.setText("");
 				textField_SupplierName.setText("");
+			}
+		});
+		btnDeleteProdukt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String productName = textField_Name.getText();
+				if(!productController.deleteProduct(productName)) {
+					System.out.println("Product could not be removed. Error!");
+				}
+			}
+		});
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = textField_Name.getText();
+				double purchasePrice = Double.parseDouble(textField_PurchasePrice.getText());
+				double salesPrice = Double.parseDouble(textField_SalesPrice.getText());
+				String countryOfOrigin = textField_CountryOfOrigin.getText();
+				String supplierName = textField_SupplierName.getText();
+				if(!productController.addProduct(supplierController.findSupplierName(supplierName), name, purchasePrice, salesPrice, countryOfOrigin)) {
+					System.out.println("Product could not be added. Error!");
+				}
 			}
 		});
 	}

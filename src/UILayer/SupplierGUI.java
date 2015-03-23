@@ -10,10 +10,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.Component;
-
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -23,11 +19,10 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import UILayer.*;
 import CtrLayer.*;
 import ModelLayer.*;
-import DBLayer.*;
 
+@SuppressWarnings("serial")
 public class SupplierGUI extends JPanel {
 	private JTextField textField_idInput;
 	private JTextField textField_name;
@@ -531,6 +526,7 @@ public class SupplierGUI extends JPanel {
 		textField_id.setText(Integer.toString(supplier.getId()));
 	}// end revertChanges()
 
+	@SuppressWarnings("unused")
 	private void listAllSuppliers() {
 		supplierlist = new SupplierListGUI();
 	}// end ListAllSuppliers

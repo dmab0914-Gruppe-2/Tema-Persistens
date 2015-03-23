@@ -1,9 +1,5 @@
 package DBLayer;
 
-import static org.junit.Assert.*;
-
-import java.sql.SQLException;
-
 import org.junit.Test;
 
 import ModelLayer.Customer;

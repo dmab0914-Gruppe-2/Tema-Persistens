@@ -3,7 +3,6 @@ package CtrLayer;
 import java.util.ArrayList;
 
 import ModelLayer.Customer;
-import ModelLayer.Product;
 
 
 /**
