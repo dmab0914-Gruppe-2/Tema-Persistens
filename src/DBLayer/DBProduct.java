@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import ModelLayer.Product;
+import ModelLayer.Supplier;
 
 /**
  * @author Jacob
@@ -17,13 +18,14 @@ import ModelLayer.Product;
 public class DBProduct implements IFDBProduct {
 
 	private Connection con;
+	private DBSupplier dbSupplier;
 	
 	public DBProduct() {
 		con = DBConnection.getInstance().getDBcon();
 	}
 	
-	public ArrayList<Product> getAllProducts() {
-		return null;
+	public ArrayList<Product> getAllProducts(boolean retriveAssociation) {
+		return miscWhere("", retriveAssociation);
 	}
 	
 	/* (non-Javadoc)
@@ -39,17 +41,16 @@ public class DBProduct implements IFDBProduct {
 	 * @see DBLayer.IFDBProduct#findProduct(java.lang.String)
 	 */
 	@Override
-	public Product findProduct(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product findProduct(String name, boolean retriveAssociation) {
+		String wClause = "  ssn = '" + name + "'";
+		return singleWhere(wClause, retriveAssociation);
 	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBProduct#updateProduct(java.lang.String, java.lang.String, double, double, java.lang.String)
 	 */
 	@Override
-	public boolean updateProduct(String oldName, String newName,
-			double purchasePrice, double salesPrice, String countryOfOrigin) {
+	public boolean updateProduct(String oldName, String newName, Supplier supplier, double purchasePrice, double salesPrice, String countryOfOrigin) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -80,7 +81,16 @@ public class DBProduct implements IFDBProduct {
 				list.add(productObj);
 			}// end while
 			stmt.close();
-		}// slut try
+			if(retrieveAssociation)
+			{   //The supplier is to be build as well
+				for(Product productObj : list){
+					int supplierID = productObj.getSupplier().getId();
+					Supplier supplier = dbSupplier.findSupplier(supplierID);
+					productObj.setSupplier(supplier);
+					System.out.println("supplier have been added");
+				}
+			}//end if 
+		}// end try
 		catch (Exception e) {
 			System.out.println("Query exception - select: " + e);
 			e.printStackTrace();
@@ -103,6 +113,16 @@ public class DBProduct implements IFDBProduct {
 				productObj = buildProduct(results);
 				// Association is to be build
 				stmt.close();
+				if(retrieveAssociation)
+				{   //The supervisor and department is to be build as well
+					/*String superssn = empObj.getSupervisor().getSsn();
+					Employee superEmp = singleWhere(" ssn = '" + superssn + "'",false);
+					empObj.setSupervisor(superEmp);
+					System.out.println("Supervisor is seleceted");
+					// here the department has to be selected as well
+					int dno = empObj.getDept().getDnumber();
+					empObj.setDepartment(new DBDepartment().findDepartment(dno, false));*/
+				}
 
 			} else { // no employee was found
 				productObj = null;
@@ -114,6 +134,15 @@ public class DBProduct implements IFDBProduct {
 		return productObj;
 	}
 
+	//TODO change to product
+	private String buildQuery(String wClause) {
+		String query = "SELECT productID, name, purchasePrice, salesPrice, countryOfOrigin, supplierID FROM product";
+
+		if (wClause.length() > 0)
+			query = query + " WHERE " + wClause;
+
+		return query;
+	}
 	
 	private Product buildProduct(ResultSet results) {
 		Product productObj = new Product();
@@ -123,22 +152,12 @@ public class DBProduct implements IFDBProduct {
 			productObj.setPurchasePrice(results.getDouble("purchasePrice"));
 			productObj.setSalesPrice(results.getDouble("salesPrice"));
 			productObj.setCountryOfOrigin(results.getString("countryOfOrigin"));
-			//productObj.setSupplier(supplier);
+			productObj.setSupplier(new Supplier(results.getInt("supplierID")));
 
 		} catch (Exception e) {
-			System.out.println("error in building the Customer object");
+			System.out.println("error in building the Product object");
 		}
 		return productObj;
-	}
-
-	//TODO change to product
-	private String buildQuery(String wClause) {
-		String query = "SELECT customerID, name, address, zipcode, city, phoneno, email FROM Customer";
-
-		if (wClause.length() > 0)
-			query = query + " WHERE " + wClause;
-
-		return query;
 	}
 
 }

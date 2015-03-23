@@ -3,9 +3,12 @@
  */
 package CtrLayer;
 
+import java.util.ArrayList;
+
 import DBLayer.DBProduct;
 import DBLayer.IFDBProduct;
 import ModelLayer.Product;
+import ModelLayer.Supplier;
 
 /**
  * @author Jacob
@@ -26,8 +29,8 @@ public class ProductController implements IFProductController {
 	 * java.lang.String, double, double)
 	 */
 	@Override
-	public boolean addProduct(String supplierName, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
-		Product p = new Product(supplierName, name, purchasePrice, salesPrice, countryOfOrigin);
+	public boolean addProduct(Supplier supplier, String name, double purchasePrice, double salesPrice, String countryOfOrigin) {
+		Product p = new Product(supplier, name, purchasePrice, salesPrice, countryOfOrigin);
 		return dbProduct.addProduct(p);
 	}
 
@@ -37,8 +40,8 @@ public class ProductController implements IFProductController {
 	 * @see CtrLayer.IFProductController#findProduct(java.lang.String)
 	 */
 	@Override
-	public Product findProduct(String name) {
-		return dbProduct.findProduct(name);
+	public Product findProduct(String name, boolean retriveAssociation) {
+		return dbProduct.findProduct(name, retriveAssociation);
 	}
 
 	/*
@@ -48,8 +51,8 @@ public class ProductController implements IFProductController {
 	 * java.lang.String, double, double, java.lang.String)
 	 */
 	@Override
-	public boolean updateProduct(String oldName, String newName, double purchasePrice, double salesPrice, String countryOfOrigin) {
-		return dbProduct.updateProduct(oldName, newName, purchasePrice, salesPrice, countryOfOrigin);
+	public boolean updateProduct(String oldName, String newName, Supplier supplier, double purchasePrice, double salesPrice, String countryOfOrigin) {
+		return dbProduct.updateProduct(oldName, newName, supplier, purchasePrice, salesPrice, countryOfOrigin);
 	}
 
 	/*
@@ -72,6 +75,10 @@ public class ProductController implements IFProductController {
 	@Override
 	public boolean deleteProduct(String name) {
 		return dbProduct.deleteProduct(name);
+	}
+	
+	public ArrayList<Product> getAllProducts() {
+		return dbProduct.getAllProducts(false);
 	}
 
 }
