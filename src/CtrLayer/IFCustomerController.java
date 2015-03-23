@@ -1,6 +1,9 @@
 package CtrLayer;
 
+import java.util.ArrayList;
+
 import ModelLayer.Customer;
+import ModelLayer.Product;
 
 
 /**
@@ -17,4 +20,6 @@ public interface IFCustomerController {
 	public int updateCustomer(int customerID, String name, String address, int zipCode, String city, String phoneNumber, String email);
 
 	public int deleteCustomer(int id);
+	
+	public ArrayList<Customer> getAllCustomers();
 }

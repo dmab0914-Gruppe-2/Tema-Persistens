@@ -1,5 +1,7 @@
 package CtrLayer;
 
+import java.util.ArrayList;
+
 import DBLayer.DBCustomer;
 import DBLayer.IFDBCustomer;
 import ModelLayer.Customer;
@@ -57,6 +59,11 @@ public class CustomerController implements IFCustomerController {
 	public int deleteCustomer(int id) {
 	 IFDBCustomer dbCus = new DBCustomer();
 	 return dbCus.delete(id);
+	}
+	
+	public ArrayList<Customer> getAllCustomers() {
+		IFDBCustomer dbCus = new DBCustomer();
+		return dbCus.getAllCustomers(false);		
 	}
 
 }
