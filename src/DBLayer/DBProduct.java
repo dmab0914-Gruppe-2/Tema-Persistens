@@ -35,30 +35,34 @@ public class DBProduct implements IFDBProduct {
 	 */
 	@Override
 	public boolean addProduct(Product p) {
-		int rc = -1;
-		String query="INSERT INTO Product(name, purchasePrice, salesPrice, countryOfOrigin, supplierID)  VALUES('"+
-				p.getName()  + "','"  +
-				p.getPurchasePrice()  + "','"  +
-				p.getSalesPrice() + "','" +
-				p.getCountryOfOrigin() + "','" +
-				p.getSupplier().getId() + "')";
+		if(findProduct(p.getName(), false) == null) {
+
+			int rc = -1;
+			String query="INSERT INTO Product(name, purchasePrice, salesPrice, countryOfOrigin, supplierID)  VALUES('"+
+					p.getName()  + "','"  +
+					p.getPurchasePrice()  + "','"  +
+					p.getSalesPrice() + "','" +
+					p.getCountryOfOrigin() + "','" +
+					p.getSupplier().getId() + "')";
 
 
-		System.out.println("insert : " + query);
-		try{
-			Statement stmt = con.createStatement();
-			stmt.setQueryTimeout(5);
-			rc = stmt.executeUpdate(query);
-			stmt.close();
-		}//end try
-		catch(SQLException ex){
-			System.out.println("Product haven't been created");
-			//throw new Exception ("Product is not added correctly");
+			System.out.println("insert : " + query);
+			try{
+				Statement stmt = con.createStatement();
+				stmt.setQueryTimeout(5);
+				rc = stmt.executeUpdate(query);
+				stmt.close();
+			}//end try
+			catch(SQLException ex){
+				System.out.println("Product haven't been created");
+				//throw new Exception ("Product is not added correctly");
+			}
+			if(rc == 0) {
+				return false;
+			}
+			return true;
 		}
-		if(rc == 0) {
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	/* (non-Javadoc)
@@ -75,8 +79,30 @@ public class DBProduct implements IFDBProduct {
 	 */
 	@Override
 	public boolean updateProduct(String oldName, String newName, Supplier supplier, double purchasePrice, double salesPrice, String countryOfOrigin) {
-		// TODO Auto-generated method stub
-		return false;
+		int rc=-1;
+
+		String query="UPDATE Product SET "+
+				"name ='"+ newName+"', "+
+				"purchasePrice ='"+ purchasePrice + "', " +
+				"salesPrice ='"+ salesPrice + "', " +
+				"countryOfOrigin ='"+ countryOfOrigin + "' " +
+				"supplier ='"+ supplier.getId() + "' " +
+				" WHERE name = '"+ oldName + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+
+			stmt.close();
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in employee db: "+ex);
+		}
+		if(rc == 0) {
+			return false;
+		}
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -154,14 +180,11 @@ public class DBProduct implements IFDBProduct {
 				// Association is to be build
 				stmt.close();
 				if(retrieveAssociation)
-				{   //The supervisor and department is to be build as well
-					/*String superssn = empObj.getSupervisor().getSsn();
-					Employee superEmp = singleWhere(" ssn = '" + superssn + "'",false);
-					empObj.setSupervisor(superEmp);
-					System.out.println("Supervisor is seleceted");
-					// here the department has to be selected as well
-					int dno = empObj.getDept().getDnumber();
-					empObj.setDepartment(new DBDepartment().findDepartment(dno, false));*/
+				{   
+					int supplierID = productObj.getSupplier().getId();
+					Supplier supplier = dbSupplier.findSupplier(supplierID);
+					productObj.setSupplier(supplier);
+					System.out.println("supplier have been added");
 				}
 
 			} else { // no employee was found

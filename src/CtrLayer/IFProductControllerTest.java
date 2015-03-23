@@ -41,13 +41,15 @@ public class IFProductControllerTest {
 	 */
 	@Test
 	public final void testAddProduct() {
-		Supplier supplier = supplierController.findSupplier(1);
+		Supplier supplier = supplierController.findSupplierID(1);
 		String name = "Grønne fine sko";
 		double purchasePrice = 60;
 		double salesPrice = 80;
 		String countryOfOrigin = "Julemandens værksted";
-		//boolean status = productController.addProduct(supplier, name, purchasePrice, salesPrice, countryOfOrigin);
-		//System.out.println("addProduct Success = " + status);
+		boolean status = productController.addProduct(supplier, name, purchasePrice, salesPrice, countryOfOrigin);
+		if(!status) {
+			fail("addProduct error");
+		}
 	}
 
 	/**
