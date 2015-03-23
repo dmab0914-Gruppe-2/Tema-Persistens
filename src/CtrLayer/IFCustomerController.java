@@ -9,15 +9,12 @@ import ModelLayer.Customer;
  */
 public interface IFCustomerController {
 
-	public boolean addCustomer(int CustomerID, String name, String address, int zipCode,
-			String city, String phoneNumber, String email);
+	public void addCustomer(String name, String address, int zipCode,
+			String city, String phoneNumber, String email) throws Exception;
 
 	public Customer findCustomer(String phoneNumber);
 
-	public boolean updateCustomer(int oldCustomerID, int newCustomerID, String oldName, String newName,
-			String oldAddress, String newAddress, int oldZipCode,
-			int newZipCode, String oldCity, String newCity, String oldEmail,
-			String newEmail);
+	public int updateCustomer(int customerID, String name, String address, int zipCode, String city, String phoneNumber, String email);
 
-	public boolean deleteCustomer(String phoneNumber);
+	public int deleteCustomer(String phoneNumber);
 }
