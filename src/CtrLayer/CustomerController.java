@@ -37,6 +37,7 @@ public class CustomerController implements IFCustomerController {
 
 		IFDBCustomer dbCus = new DBCustomer();
 		Customer cus = new Customer();
+		cus.setCustomerID(customerID);
 		cus.setName(name);
 		cus.setAddress(address);
 		cus.setZipCode(zipCode);
