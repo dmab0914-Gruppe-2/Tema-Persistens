@@ -25,11 +25,11 @@ public class DBSupplier {
 
 	public Supplier findSupplier(int id  )
 	{
-		String wClause = " supplierID" + id + "'";
+		String wClause = " supplierID =" + id + "";
 		return singleWhere(wClause );
 	}//endFindSupplier
 
-	public Supplier searchSupplier(String sname, boolean ra)
+	public Supplier searchSupplier(String sname)
 	{
 		String wClause = "name like %" + sname + "%'";
 		System.out.println("Search Supplier: "+ wClause);
@@ -161,7 +161,7 @@ public class DBSupplier {
 
 	private String buildQuery(String s)
 	{
-		String query = "SELECT name, supplierID FROM Supplier";
+		String query = "SELECT * FROM Supplier";
 		System.out.println(query);
 		if(s.length()>0)
 		{
@@ -176,6 +176,10 @@ public class DBSupplier {
 		try{
 			s.setName(results.getString("name"));
 			s.setId(results.getInt("supplierID"));
+			s.setAddress(results.getString("address"));
+			s.setCountry(results.getString("country"));
+			s.setEmail(results.getString("email"));
+			s.setPhoneno(results.getString("phoneNo"));
 		}
 		catch(Exception e){
 			System.out.println("Error in building the Supplier Object!" + e);
