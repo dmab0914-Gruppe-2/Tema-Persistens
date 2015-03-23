@@ -1,23 +1,30 @@
 package UILayer;
 
 import javax.swing.JPanel;
+
 import java.awt.Dimension;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import CtrLayer.*;
 import ModelLayer.*;
+import DBLayer.*;
 
 public class SupplierGUI extends JPanel {
 	private JTextField textField_idInput;
@@ -27,11 +34,17 @@ public class SupplierGUI extends JPanel {
 	private JTextField textField_phone;
 	private JTextField textField_email;
 	private SupplierController scon;
-
+	JButton btnFindById;
+	JButton btnNewSupplier;
+	JButton btnCancel;
+	JButton btnClear;
+	JLabel label_id;
+	
 	/**
 	 * Create the panel.
 	 */
 	public SupplierGUI() {
+		scon = new SupplierController();
 		setPreferredSize(new Dimension(750, 500));
 		setMinimumSize(new Dimension(750, 500));
 		
@@ -54,7 +67,7 @@ public class SupplierGUI extends JPanel {
 		
 		JButton btnSave = new JButton("Save");
 		
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		
 		JButton btnRevertChanges = new JButton("Revert Changes");
 		
@@ -64,16 +77,11 @@ public class SupplierGUI extends JPanel {
 		textField_idInput = new JTextField();
 		textField_idInput.setColumns(10);
 		
-		JButton btnFindById = new JButton("Find by ID");
-		btnFindById.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				findSupplier();
-			}
-		});
+		btnFindById = new JButton("Find by ID");
+		btnNewSupplier = new JButton("New Supplier");
 		
-		JButton btnNewSupplier = new JButton("New Supplier");
+		btnClear = new JButton("Clear Fields");
 		
-		JButton btnClear = new JButton("Clear Fields");
 		
 		JButton btnDeleteSupplier = new JButton("Delete Supplier");
 		
@@ -107,7 +115,7 @@ public class SupplierGUI extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		
-		JLabel label_id = new JLabel("0");
+		label_id = new JLabel("0");
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(
 			gl_layeredPane.createParallelGroup(Alignment.LEADING)
@@ -213,10 +221,10 @@ public class SupplierGUI extends JPanel {
 		);
 		layeredPane.setLayout(gl_layeredPane);
 		setLayout(groupLayout);
-
+		actionListerners();
 	}
 	
-	private void findSupplier()
+	public void findSupplier()
 	{
 		
 		int i = -1;
@@ -232,8 +240,58 @@ public class SupplierGUI extends JPanel {
 		
 		if(i !=-1)
 		{
+			Supplier s = new Supplier(); 
+			s = scon.findSupplier(i);
+			textField_address.setText(s.getAddress());
+			textField_country.setText(s.getCountry());
+			textField_email.setText(s.getEmail());
+			textField_name.setText(s.getName());
+			textField_phone.setText(s.getPhoneno());
+			label_id.setText(Integer.toString(s.getId()));
 			
 		}//endIf
-		//Supplier s = scon.findSupplier();
 	}//endFindSupplier
+	
+	private void addSupplier()
+	{
+		scon.addSupplier(
+				textField_name.getText(), 
+				textField_address.getText(), 
+				textField_country.getText(), 
+				textField_phone.getText(), 
+				textField_email.getText());
+	}//endAddSupplier
+	
+	private void clearFields()
+	{
+		textField_address.setText("");
+		textField_country.setText("");
+		textField_email.setText("");
+		textField_idInput.setText("");
+		textField_name.setText("");
+		textField_phone.setText("");
+		label_id.setText("0");
+	}
+	
+	private void actionListerners()
+	{
+		
+		btnFindById.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				findSupplier();
+			}
+		});
+		
+		btnNewSupplier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addSupplier();
+			}
+		});
+		
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clearFields();
+			}
+		});
+	}
 }//endClass

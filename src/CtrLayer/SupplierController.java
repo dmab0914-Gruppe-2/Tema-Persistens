@@ -17,7 +17,7 @@ public class SupplierController implements IFSupplierController {
 	
 	public SupplierController()
 	{
-		DBSupplier dbSupplier = new DBSupplier();
+		dbSupplier = new DBSupplier();
 	}
 
 	/* (non-Javadoc)
@@ -27,6 +27,7 @@ public class SupplierController implements IFSupplierController {
 	public int addSupplier(String name, String address, String country, String phoneNo, String email) {
 		Supplier s = new Supplier(name, address, country, phoneNo, email);
 		int i = -1;
+		
 		try {
 			i = dbSupplier.addSupplier(s);
 			if(i != -1)
@@ -43,7 +44,6 @@ public class SupplierController implements IFSupplierController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return i;
 	}//endAddSupplier
 

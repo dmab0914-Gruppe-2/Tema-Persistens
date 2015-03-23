@@ -65,7 +65,7 @@ public class DBCustomer implements IFDBCustomer {
 	}
 
 	@Override
-	public int updateCustomer(Customer cus) throws Exception {
+	public int updateCustomer(Customer cus) {
 		Customer cusObj = cus;
 		int rc = -1;
 
