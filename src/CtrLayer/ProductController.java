@@ -17,11 +17,11 @@ import ModelLayer.Supplier;
 public class ProductController implements IFProductController {
 
 	IFDBProduct dbProduct;
-	
+
 	public ProductController() {
-		 dbProduct = new DBProduct();
+		dbProduct = new DBProduct();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -76,7 +76,7 @@ public class ProductController implements IFProductController {
 	public boolean deleteProduct(String name) {
 		return dbProduct.deleteProduct(name);
 	}
-	
+
 	public ArrayList<Product> getAllProducts() {
 		return dbProduct.getAllProducts(true);
 	}

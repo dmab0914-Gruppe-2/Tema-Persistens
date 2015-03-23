@@ -5,6 +5,7 @@ package DBLayer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -19,22 +20,45 @@ public class DBProduct implements IFDBProduct {
 
 	private Connection con;
 	private DBSupplier dbSupplier;
-	
+
 	public DBProduct() {
 		con = DBConnection.getInstance().getDBcon();
+		dbSupplier = new DBSupplier();
 	}
-	
+
 	public ArrayList<Product> getAllProducts(boolean retriveAssociation) {
 		return miscWhere("", retriveAssociation);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBProduct#addProduct(ModelLayer.Product)
 	 */
 	@Override
 	public boolean addProduct(Product p) {
-		// TODO Auto-generated method stub
-		return false;
+		int rc = -1;
+		String query="INSERT INTO Product(name, purchasePrice, salesPrice, countryOfOrigin, supplierID)  VALUES('"+
+				p.getName()  + "','"  +
+				p.getPurchasePrice()  + "','"  +
+				p.getSalesPrice() + "','" +
+				p.getCountryOfOrigin() + "','" +
+				p.getSupplier().getId() + "')";
+
+
+		System.out.println("insert : " + query);
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}//end try
+		catch(SQLException ex){
+			System.out.println("Product haven't been created");
+			//throw new Exception ("Product is not added correctly");
+		}
+		if(rc == 0) {
+			return false;
+		}
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +66,7 @@ public class DBProduct implements IFDBProduct {
 	 */
 	@Override
 	public Product findProduct(String name, boolean retriveAssociation) {
-		String wClause = "  ssn = '" + name + "'";
+		String wClause = "  name = '" + name + "'";
 		return singleWhere(wClause, retriveAssociation);
 	}
 
@@ -60,10 +84,26 @@ public class DBProduct implements IFDBProduct {
 	 */
 	@Override
 	public boolean deleteProduct(String name) {
-		// TODO Auto-generated method stub
-		return false;
+		int rc=-1;
+
+		String query="DELETE FROM Product WHERE name = '" +
+				name + "'";
+		System.out.println(query);
+		try{ // delete from product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}//end try	
+		catch(Exception ex){
+			System.out.println("Delete exception in product db: "+ex);
+		}
+		if(rc == 0) {
+			return false;
+		}
+		return true;
 	}
-	
+
 	private ArrayList<Product> miscWhere(String wClause, boolean retrieveAssociation) {
 		ResultSet results;
 		ArrayList<Product> list = new ArrayList<Product>();
@@ -97,7 +137,7 @@ public class DBProduct implements IFDBProduct {
 		}
 		return list;
 	}
-	
+
 	private Product singleWhere(String wClause, boolean retrieveAssociation) {
 		ResultSet results;
 		Product productObj = new Product();
@@ -143,7 +183,7 @@ public class DBProduct implements IFDBProduct {
 
 		return query;
 	}
-	
+
 	private Product buildProduct(ResultSet results) {
 		Product productObj = new Product();
 		try { // the columns from the table Customer are used
