@@ -90,8 +90,7 @@ public class DBSupplier {
 	{
 		int rc = -1;
 
-		String query="DELETE FROM Supplier WHERE supplierID = '"+
-		id + "'";
+		String query="DELETE FROM Supplier WHERE supplierID = "+id;
 		System.out.println(query);
 		try
 		{

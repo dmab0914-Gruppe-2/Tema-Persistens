@@ -8,6 +8,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Component;
@@ -38,12 +39,16 @@ public class SupplierGUI extends JPanel {
 	JButton btnNewSupplier;
 	JButton btnCancel;
 	JButton btnClear;
-	JLabel label_id;
+	JButton btnRevertChanges;
+	JButton btnFindByName;
+	private JTextField textField_id;
+	private Supplier supplier;
 	
 	/**
 	 * Create the panel.
 	 */
 	public SupplierGUI() {
+		supplier = new Supplier(); 
 		scon = new SupplierController();
 		setPreferredSize(new Dimension(750, 500));
 		setMinimumSize(new Dimension(750, 500));
@@ -69,7 +74,7 @@ public class SupplierGUI extends JPanel {
 		
 		btnCancel = new JButton("Cancel");
 		
-		JButton btnRevertChanges = new JButton("Revert Changes");
+		btnRevertChanges = new JButton("Revert Changes");
 		
 		JLabel lblSupplier = new JLabel("Supplier");
 		lblSupplier.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -84,6 +89,11 @@ public class SupplierGUI extends JPanel {
 		
 		
 		JButton btnDeleteSupplier = new JButton("Delete Supplier");
+		btnDeleteSupplier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteSupplier();
+			}
+		});
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -115,23 +125,32 @@ public class SupplierGUI extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		
-		label_id = new JLabel("0");
+		textField_id = new JTextField();
+		textField_id.setEditable(false);
+		textField_id.setColumns(10);
+		
+		btnFindByName = new JButton("Find by Name");
+
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(
 			gl_layeredPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_layeredPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSupplier)
 						.addGroup(gl_layeredPane.createSequentialGroup()
-							.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnFindById))
-						.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(btnNewSupplier, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnClear, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnDeleteSupplier, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(27)
+							.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblSupplier)
+								.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(btnNewSupplier, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnClear, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnDeleteSupplier, Alignment.LEADING))
+								.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(6))
+						.addGroup(Alignment.TRAILING, gl_layeredPane.createSequentialGroup()
+							.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnFindById, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+								.addComponent(btnFindByName, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
@@ -142,28 +161,28 @@ public class SupplierGUI extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnSave))
 						.addGroup(gl_layeredPane.createSequentialGroup()
-							.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+							.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblPhone)
 										.addComponent(lblEmail))
 									.addGap(18)
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField_phone, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-										.addComponent(textField_email, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-										.addComponent(label_id)))
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+										.addComponent(textField_phone, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+										.addComponent(textField_email, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+										.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addComponent(lblNewLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textField_country, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING, gl_layeredPane.createSequentialGroup()
+									.addComponent(textField_country, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblAddress)
 										.addComponent(lblName))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField_name, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-										.addComponent(textField_address, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+										.addComponent(textField_name, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+										.addComponent(textField_address, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))))
 							.addGap(249))
 						.addComponent(lblNewLabel_1))
 					.addContainerGap())
@@ -179,10 +198,12 @@ public class SupplierGUI extends JPanel {
 								.addGroup(gl_layeredPane.createSequentialGroup()
 									.addComponent(lblSupplier)
 									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnFindById))
-									.addGap(30)
+									.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnFindById)
+									.addGap(18)
+									.addComponent(btnFindByName)
+									.addGap(47)
 									.addComponent(btnNewSupplier)
 									.addGap(18)
 									.addComponent(btnClear)
@@ -211,8 +232,8 @@ public class SupplierGUI extends JPanel {
 									.addGap(18)
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
 										.addComponent(lblNewLabel_1)
-										.addComponent(label_id))))
-							.addPreferredGap(ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+										.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+							.addPreferredGap(ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
 							.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnSave)
 								.addComponent(btnCancel)
@@ -224,7 +245,7 @@ public class SupplierGUI extends JPanel {
 		actionListerners();
 	}
 	
-	public void findSupplier()
+	public void findSupplierID()
 	{
 		
 		int i = -1;
@@ -240,14 +261,13 @@ public class SupplierGUI extends JPanel {
 		
 		if(i !=-1)
 		{
-			Supplier s = new Supplier(); 
-			s = scon.findSupplier(i);
-			textField_address.setText(s.getAddress());
-			textField_country.setText(s.getCountry());
-			textField_email.setText(s.getEmail());
-			textField_name.setText(s.getName());
-			textField_phone.setText(s.getPhoneno());
-			label_id.setText(Integer.toString(s.getId()));
+			supplier = scon.findSupplier(i);
+			textField_address.setText(supplier.getAddress());
+			textField_country.setText(supplier.getCountry());
+			textField_email.setText(supplier.getEmail());
+			textField_name.setText(supplier.getName());
+			textField_phone.setText(supplier.getPhoneno());
+			textField_id.setText(Integer.toString(supplier.getId()));
 			
 		}//endIf
 	}//endFindSupplier
@@ -270,15 +290,37 @@ public class SupplierGUI extends JPanel {
 		textField_idInput.setText("");
 		textField_name.setText("");
 		textField_phone.setText("");
-		label_id.setText("0");
-	}
+		textField_id.setText("0");
+	}//endClearFields
+	
+	private void deleteSupplier()
+	{
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Supplier?", "Confirm deletion!",dialogButton);
+		if(dialogResult==0)
+		{
+			try
+			{
+				scon.deleteSupplier(Integer.parseInt(textField_idInput.getText()));	
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Not a number! " + e);
+			}//endCatch
+		}//endIf
+	}//end deleteSupplier()
+	
+	private void revertChanges()
+	{
+		
+	}//end revertChanges()
 	
 	private void actionListerners()
 	{
 		
 		btnFindById.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				findSupplier();
+				findSupplierID();
 			}
 		});
 		
@@ -291,6 +333,17 @@ public class SupplierGUI extends JPanel {
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				clearFields();
+			}
+		});
+		
+		btnRevertChanges.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				revertChanges();
+			}
+		});
+		
+		btnFindByName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 	}
