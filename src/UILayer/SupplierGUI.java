@@ -23,6 +23,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import UILayer.*;
 import CtrLayer.*;
 import ModelLayer.*;
 import DBLayer.*;
@@ -43,6 +44,9 @@ public class SupplierGUI extends JPanel {
 	JButton btnFindByName;
 	private JTextField textField_id;
 	Supplier supplier;
+	private JButton btnListAllSuppliers;
+	SupplierListGUI supplierlist;
+	JButton btnSave;
 	
 	/**
 	 * Create the panel.
@@ -70,7 +74,7 @@ public class SupplierGUI extends JPanel {
 					.addContainerGap())
 		);
 		
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		
 		btnCancel = new JButton("Cancel");
 		
@@ -130,6 +134,9 @@ public class SupplierGUI extends JPanel {
 		textField_id.setColumns(10);
 		
 		btnFindByName = new JButton("Find by Name");
+		
+		btnListAllSuppliers = new JButton("List All Suppliers");
+
 
 		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
 		gl_layeredPane.setHorizontalGroup(
@@ -140,17 +147,16 @@ public class SupplierGUI extends JPanel {
 						.addGroup(gl_layeredPane.createSequentialGroup()
 							.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblSupplier)
-								.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(btnNewSupplier, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnClear, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnDeleteSupplier, Alignment.LEADING))
 								.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(6))
-						.addGroup(Alignment.TRAILING, gl_layeredPane.createSequentialGroup()
-							.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnFindById, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-								.addComponent(btnFindByName, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGap(25))
+						.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(btnNewSupplier, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnClear, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnDeleteSupplier, Alignment.LEADING))
+						.addComponent(btnFindById, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnListAllSuppliers)
+						.addComponent(btnFindByName, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
@@ -191,54 +197,60 @@ public class SupplierGUI extends JPanel {
 			gl_layeredPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_layeredPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(separator, GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+					.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_layeredPane.createSequentialGroup()
-							.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_layeredPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
 								.addGroup(gl_layeredPane.createSequentialGroup()
-									.addComponent(lblSupplier)
-									.addGap(18)
-									.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnFindById)
-									.addGap(18)
-									.addComponent(btnFindByName)
-									.addGap(47)
+									.addGroup(gl_layeredPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_layeredPane.createSequentialGroup()
+											.addComponent(lblSupplier)
+											.addGap(18)
+											.addComponent(textField_idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(btnFindById)
+											.addGap(18)
+											.addComponent(btnFindByName))
+										.addGroup(gl_layeredPane.createSequentialGroup()
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblName)
+												.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(18)
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblAddress)
+												.addComponent(textField_address, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(18)
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblNewLabel)
+												.addComponent(textField_country, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(18)
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblPhone)
+												.addComponent(textField_phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(18)
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblEmail)
+												.addComponent(textField_email, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(18)
+											.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblNewLabel_1)
+												.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+									.addGap(25)
 									.addComponent(btnNewSupplier)
 									.addGap(18)
 									.addComponent(btnClear)
 									.addGap(18)
-									.addComponent(btnDeleteSupplier))
-								.addGroup(gl_layeredPane.createSequentialGroup()
+									.addComponent(btnDeleteSupplier)
+									.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
 									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblName)
-										.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblAddress)
-										.addComponent(textField_address, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNewLabel)
-										.addComponent(textField_country, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblPhone)
-										.addComponent(textField_phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblEmail)
-										.addComponent(textField_email, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNewLabel_1)
-										.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-							.addPreferredGap(ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
-							.addGroup(gl_layeredPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnSave)
-								.addComponent(btnCancel)
-								.addComponent(btnRevertChanges))))
-					.addContainerGap())
+										.addComponent(btnSave)
+										.addComponent(btnCancel)
+										.addComponent(btnRevertChanges))))
+							.addContainerGap())
+						.addGroup(gl_layeredPane.createSequentialGroup()
+							.addGap(194)
+							.addComponent(btnListAllSuppliers)
+							.addGap(250))))
 		);
 		layeredPane.setLayout(gl_layeredPane);
 		setLayout(groupLayout);
@@ -332,6 +344,22 @@ public class SupplierGUI extends JPanel {
 		textField_id.setText(Integer.toString(supplier.getId()));
 	}//end revertChanges()
 	
+	private void listAllSuppliers()
+	{
+		supplierlist = new SupplierListGUI();
+	}//end ListAllSuppliers
+	
+	private void save()
+	{
+		scon.updateSupplier(
+				supplier.getId(), 
+				textField_name.getText(), 
+				textField_address.getText(), 
+				textField_country.getText(), 
+				textField_country.getText(), 
+				textField_email.getText());
+	}
+	
 	private void actionListerners()
 	{
 		
@@ -362,6 +390,18 @@ public class SupplierGUI extends JPanel {
 		btnFindByName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				findSupplierName();
+			}
+		});
+		
+		btnListAllSuppliers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SupplierListGUI.main(null);
+			}
+		});
+		
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				save();
 			}
 		});
 	}
