@@ -78,7 +78,7 @@ public class ProductController implements IFProductController {
 	}
 	
 	public ArrayList<Product> getAllProducts() {
-		return dbProduct.getAllProducts(false);
+		return dbProduct.getAllProducts(true);
 	}
 
 }
