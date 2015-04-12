@@ -47,7 +47,6 @@ public class SupplierGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public SupplierGUI() {
-		Supplier supplier = new Supplier();
 		scon = new SupplierController();
 		setPreferredSize(new Dimension(750, 500));
 		setMinimumSize(new Dimension(750, 500));

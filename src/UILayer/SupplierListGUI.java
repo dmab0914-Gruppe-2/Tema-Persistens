@@ -93,9 +93,11 @@ public class SupplierListGUI {
 		table = new JTable(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Name", "Address", "Country", "Email",
 						"Phone" }) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { Integer.class, String.class,
 					String.class, String.class, String.class, Object.class };
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
